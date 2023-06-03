@@ -85,6 +85,10 @@ main() {
   host="$(get_tmux_option "@catppuccin_host" "off")"
   readonly host
 
+  local cpu
+  cpu="$(get_tmux_option "@catppuccin_cpu" "off")"
+  readonly cpu
+
   local directory_icon
   directory_icon="$(get_tmux_option "@catppuccin_directory_icon" "")"
   readonly directory_icon
@@ -108,6 +112,10 @@ main() {
   local datetime_icon
   datetime_icon="$(get_tmux_option "@catppuccin_datetime_icon" "")"
   readonly datetime_icon
+
+  local cpu_icon
+  cpu_icon="$(get_tmux_option "@catppuccin_cpu_icon" "")"
+  readonly cpu_icon
 
   # These variables are the defaults so that the setw and set calls are easier to parse.
   local show_directory
@@ -140,6 +148,9 @@ main() {
   local show_date_time
   readonly show_date_time="#[fg=$thm_blue,bg=$thm_gray]$right_separator#[fg=$thm_bg,bg=$thm_blue]$datetime_icon #[fg=$thm_fg,bg=$thm_gray] $date_time "
 
+  local show_cpu
+  readonly show_cpu="#[fg=$thm_blue,bg=$thm_gray]$right_separator#[fg=$thm_bg,bg=$thm_blue]$cpu_icon #[fg=$thm_fg,bg=$thm_gray] #{cpu_percentage} "
+
   # Right column 1 by default shows the Window name.
   local right_column1=$show_window
 
@@ -168,6 +179,10 @@ main() {
 
   if [[ "${date_time}" != "off" ]]; then
     right_column2=$right_column2$show_date_time
+  fi
+
+  if [[ "${cpu}" == "on" ]]; then
+    right_column2=$right_column2$show_cpu
   fi
 
   set status-left ""
